@@ -1,0 +1,303 @@
+{
+  "filename": "examples/command_injection_vulnerable.py",
+  "timestamp": "2025-10-31 21:02:11",
+  "language": "python",
+  "statistics": {
+    "total_vulnerabilities": 9,
+    "critical": 9,
+    "high": 0,
+    "average_cvss": 8.7,
+    "exploits_generated": 0,
+    "patches_generated": 9
+  },
+  "vulnerabilities": [
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 12,
+      "description": "Directly passing user input to os.system() allows for arbitrary command execution.",
+      "code_snippet": "os.system(command)",
+      "exploitability": "An attacker can append shell commands to the 'hostname' parameter.",
+      "recommendation": "Use subprocess.run() with a list of arguments instead of shell=True, and avoid directly including user input in command strings.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 16,
+      "description": "Using subprocess.run with shell=True and including user input in the command can lead to command injection.",
+      "code_snippet": "subprocess.run(command, shell=True, capture_output=True)",
+      "exploitability": "An attacker can inject additional shell commands via the 'filename' parameter.",
+      "recommendation": "Avoid using shell=True, or ensure user input is properly sanitized and validated.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 32,
+      "description": "Executing shell commands with os.system() and unsanitized user input allows command injection.",
+      "code_snippet": "os.system(f\"ls -la {directory}\")",
+      "exploitability": "An attacker can append commands to the 'directory' parameter.",
+      "recommendation": "Use os.listdir() for listing directory contents without executing shell commands.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 40,
+      "description": "Command injection vulnerability due to unsanitized input passed to os.system() for grep command.",
+      "code_snippet": "os.system(command)",
+      "exploitability": "Appending shell commands to 'search_term' parameter allows arbitrary command execution.",
+      "recommendation": "Use Python's built-in file handling to search within files instead of shell commands.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 47,
+      "description": "Unsanitized user input in tar command executed via os.system() leads to command injection.",
+      "code_snippet": "os.system(f\"tar -czf {output} {filename}\")",
+      "exploitability": "Injecting shell commands through 'filename' or 'output' parameters.",
+      "recommendation": "Use tarfile module for handling tar operations in a secure manner.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 63,
+      "description": "Command injection possible through unsanitized 'username' input in id command.",
+      "code_snippet": "subprocess.check_output(command, shell=True)",
+      "exploitability": "An attacker can inject commands via the 'username' parameter.",
+      "recommendation": "Avoid shell=True and validate or sanitize user inputs.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 71,
+      "description": "wget command executed with user-controlled input allows for command injection.",
+      "code_snippet": "os.system(f\"wget {url} -O {destination}\")",
+      "exploitability": "Appending additional shell commands to 'url' or 'destination' parameters.",
+      "recommendation": "Use libraries like requests for downloading files instead of shell commands.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 120,
+      "description": "mysqldump command with unsanitized input allows for command injection.",
+      "code_snippet": "os.system(command)",
+      "exploitability": "Injecting additional commands through 'db_name' or 'backup_path' parameters.",
+      "recommendation": "Use parameterized queries or ORM libraries for database interactions.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    },
+    {
+      "vuln_type": "Command Injection",
+      "cwe_id": "CWE-77",
+      "severity": "Critical",
+      "line_number": 135,
+      "description": "Image processing command executed with shell=True and unsanitized input.",
+      "code_snippet": "subprocess.run(command, shell=True)",
+      "exploitability": "An attacker can append shell commands to 'image_path' or 'output_path'.",
+      "recommendation": "Use dedicated libraries for image processing tasks, such as PIL or OpenCV.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/command_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 8.7,
+          "severity": "High",
+          "exploitability": 2.8,
+          "impact": 5.9,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "LOW",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "HIGH"
+          }
+        },
+        "risk_score": 8.7
+      }
+    }
+  ]
+}

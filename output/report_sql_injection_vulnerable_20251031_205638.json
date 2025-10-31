@@ -1,0 +1,143 @@
+{
+  "filename": "examples/sql_injection_vulnerable.py",
+  "timestamp": "2025-10-31 20:56:38",
+  "language": "python",
+  "statistics": {
+    "total_vulnerabilities": 4,
+    "critical": 4,
+    "high": 0,
+    "average_cvss": 9.3,
+    "exploits_generated": 0,
+    "patches_generated": 0
+  },
+  "vulnerabilities": [
+    {
+      "vuln_type": "SQL Injection",
+      "cwe_id": "CWE-89",
+      "severity": "Critical",
+      "line_number": 42,
+      "description": "Direct concatenation of user input into SQL query without sanitization or parameterization, allowing SQL injection.",
+      "code_snippet": "query = f\"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'\"",
+      "exploitability": "An attacker can manipulate the 'username' or 'password' input to alter the SQL query, potentially bypassing authentication or extracting sensitive data.",
+      "recommendation": "Use parameterized queries or prepared statements to safely handle user input.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/sql_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 9.3,
+          "severity": "Critical",
+          "exploitability": 3.9,
+          "impact": 5.5,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "NONE",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "LOW"
+          }
+        },
+        "risk_score": 9.3
+      }
+    },
+    {
+      "vuln_type": "SQL Injection",
+      "cwe_id": "CWE-89",
+      "severity": "Critical",
+      "line_number": 49,
+      "description": "User input for 'user_id' is directly concatenated into the SQL query, leading to SQL injection vulnerability.",
+      "code_snippet": "query = \"SELECT * FROM users WHERE id = \" + str(user_id)",
+      "exploitability": "An attacker can input a malicious 'user_id' value to manipulate the SQL query, potentially accessing or modifying unauthorized data.",
+      "recommendation": "Adopt parameterized queries to prevent SQL injection.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/sql_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 9.3,
+          "severity": "Critical",
+          "exploitability": 3.9,
+          "impact": 5.5,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "NONE",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "LOW"
+          }
+        },
+        "risk_score": 9.3
+      }
+    },
+    {
+      "vuln_type": "SQL Injection",
+      "cwe_id": "CWE-89",
+      "severity": "Critical",
+      "line_number": 56,
+      "description": "Incorporation of user input ('search_term') directly into a SQL query without sanitization, leading to SQL injection.",
+      "code_snippet": "query = f\"SELECT username, email FROM users WHERE username LIKE '%{search_term}%'\"",
+      "exploitability": "By manipulating the 'search_term', an attacker can inject SQL code to execute arbitrary SQL commands.",
+      "recommendation": "Utilize parameterized queries to handle user inputs securely.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/sql_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 9.3,
+          "severity": "Critical",
+          "exploitability": 3.9,
+          "impact": 5.5,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "NONE",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "LOW"
+          }
+        },
+        "risk_score": 9.3
+      }
+    },
+    {
+      "vuln_type": "SQL Injection",
+      "cwe_id": "CWE-89",
+      "severity": "Critical",
+      "line_number": 63,
+      "description": "SQL query in 'update_email' method is constructed by directly including user-controlled input without any form of validation or escaping, leading to SQL injection.",
+      "code_snippet": "query = f\"UPDATE users SET email = '{new_email}' WHERE id = {user_id}\"",
+      "exploitability": "An attacker can craft 'new_email' or 'user_id' inputs to modify the SQL command, potentially altering database entries or executing unintended SQL actions.",
+      "recommendation": "Employ parameterized queries to mitigate SQL injection risks.",
+      "confidence": 1.0,
+      "metadata": {
+        "filename": "examples/sql_injection_vulnerable.py",
+        "language": "python",
+        "cvss": {
+          "base_score": 9.3,
+          "severity": "Critical",
+          "exploitability": 3.9,
+          "impact": 5.5,
+          "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "metrics": {
+            "attack_vector": "NETWORK",
+            "attack_complexity": "LOW",
+            "privileges_required": "NONE",
+            "user_interaction": "NONE",
+            "confidentiality": "HIGH",
+            "integrity": "HIGH",
+            "availability": "LOW"
+          }
+        },
+        "risk_score": 9.3
+      }
+    }
+  ]
+}

@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnDetective Report - examples/sql_injection_vulnerable.py</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            opacity: 0.9;
+            font-size: 1.2em;
+        }
+        .header .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 10px 5px;
+            font-size: 0.9em;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .stat-card .number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .stat-card .label {
+            color: #666;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .chart-section {
+            padding: 30px;
+            background: white;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        .section {
+            padding: 30px;
+            border-top: 1px solid #eee;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-size: 2em;
+        }
+        .vulnerability {
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #f9f9f9 0%, #ffffff 100%);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .vulnerability:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        .vulnerability.critical { border-left-color: #dc2626; }
+        .vulnerability.high { border-left-color: #ea580c; }
+        .vulnerability.medium { border-left-color: #facc15; }
+        .vulnerability.low { border-left-color: #3b82f6; }
+        .vulnerability-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .vulnerability-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+        }
+        .severity-badge {
+            padding: 8px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .severity-critical { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); }
+        .severity-high { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); }
+        .severity-medium { background: linear-gradient(135deg, #facc15 0%, #eab308 100%); color: #333; }
+        .severity-low { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        .vulnerability-meta {
+            display: flex;
+            gap: 20px;
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .meta-item .icon {
+            font-weight: bold;
+        }
+        .cvss-score {
+            display: inline-block;
+            padding: 5px 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .risk-score {
+            display: inline-block;
+            padding: 5px 12px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .code-block pre {
+            margin: 0;
+        }
+        .exploit, .patch {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0f9ff;
+            border-radius: 10px;
+            border: 2px solid #bae6fd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .exploit h3, .patch h3 {
+            color: #0c4a6e;
+            margin-bottom: 15px;
+        }
+        .patch {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+        .patch h3 {
+            color: #14532d;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 0.95em;
+        }
+        .confidence-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        .timeline-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        @media print {
+            .container { box-shadow: none; }
+            .vulnerability:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 VulnDetective Report</h1>
+            <div class="subtitle">
+                Advanced AI-Powered Security Analysis
+            </div>
+            <div style="margin-top: 20px;">
+                <span class="badge">📁 examples/sql_injection_vulnerable.py</span>
+                <span class="badge">📅 2025-10-31 20:56:38</span>
+                <span class="badge">💻 python</span>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number">4</div>
+                <div class="label">Total Vulnerabilities</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="color: #dc2626;">4</div>
+                <div class="label">Critical</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="color: #ea580c;">0</div>
+                <div class="label">High Severity</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">9.3</div>
+                <div class="label">Avg CVSS Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">0</div>
+                <div class="label">Exploits Generated</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">0</div>
+                <div class="label">Patches Available</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-section">
+            <h2>📊 Visual Analytics</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 15px;">Severity Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="severityChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 15px;">Vulnerability Types</h3>
+                    <div class="chart-container">
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="text-align: center; margin-bottom: 15px;">CVSS Score Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="cvssChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚠️ Detected Vulnerabilities</h2>
+            
+            <div class="vulnerability critical">
+                <div class="vulnerability-header">
+                    <div class="vulnerability-title">1. SQL Injection</div>
+                    <span class="severity-badge severity-critical">
+                        Critical
+                    </span>
+                </div>
+
+                <div class="vulnerability-meta">
+                    <div class="meta-item">
+                        <span class="icon">📍</span>
+                        <span>Line 42</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🔖</span>
+                        <span>CWE-89</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🎯</span>
+                        <span>Confidence: 100%</span>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <span class="cvss-score">CVSS: 9.3</span>
+                    </div>
+                    
+                    
+                    <div class="meta-item">
+                        <span class="risk-score">Risk: 9.3</span>
+                    </div>
+                    
+                </div>
+
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 100.0%"></div>
+                </div>
+
+                <p style="margin: 15px 0;"><strong>📝 Description:</strong> Direct concatenation of user input into SQL query without sanitization or parameterization, allowing SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <div class="code-block"><pre>query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"</pre></div>
+                
+
+                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> An attacker can manipulate the 'username' or 'password' input to alter the SQL query, potentially bypassing authentication or extracting sensitive data.</p>
+                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Use parameterized queries or prepared statements to safely handle user input.</p>
+
+                
+                <details style="margin-top: 15px;">
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
+                        <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
+                        <p><strong>Exploitability:</strong> 3.9</p>
+                        <p><strong>Impact:</strong> 5.5</p>
+                        <p><strong>Attack Vector:</strong> NETWORK</p>
+                        <p><strong>Attack Complexity:</strong> LOW</p>
+                    </div>
+                </details>
+                
+            </div>
+            
+            <div class="vulnerability critical">
+                <div class="vulnerability-header">
+                    <div class="vulnerability-title">2. SQL Injection</div>
+                    <span class="severity-badge severity-critical">
+                        Critical
+                    </span>
+                </div>
+
+                <div class="vulnerability-meta">
+                    <div class="meta-item">
+                        <span class="icon">📍</span>
+                        <span>Line 49</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🔖</span>
+                        <span>CWE-89</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🎯</span>
+                        <span>Confidence: 100%</span>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <span class="cvss-score">CVSS: 9.3</span>
+                    </div>
+                    
+                    
+                    <div class="meta-item">
+                        <span class="risk-score">Risk: 9.3</span>
+                    </div>
+                    
+                </div>
+
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 100.0%"></div>
+                </div>
+
+                <p style="margin: 15px 0;"><strong>📝 Description:</strong> User input for 'user_id' is directly concatenated into the SQL query, leading to SQL injection vulnerability.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <div class="code-block"><pre>query = "SELECT * FROM users WHERE id = " + str(user_id)</pre></div>
+                
+
+                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> An attacker can input a malicious 'user_id' value to manipulate the SQL query, potentially accessing or modifying unauthorized data.</p>
+                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Adopt parameterized queries to prevent SQL injection.</p>
+
+                
+                <details style="margin-top: 15px;">
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
+                        <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
+                        <p><strong>Exploitability:</strong> 3.9</p>
+                        <p><strong>Impact:</strong> 5.5</p>
+                        <p><strong>Attack Vector:</strong> NETWORK</p>
+                        <p><strong>Attack Complexity:</strong> LOW</p>
+                    </div>
+                </details>
+                
+            </div>
+            
+            <div class="vulnerability critical">
+                <div class="vulnerability-header">
+                    <div class="vulnerability-title">3. SQL Injection</div>
+                    <span class="severity-badge severity-critical">
+                        Critical
+                    </span>
+                </div>
+
+                <div class="vulnerability-meta">
+                    <div class="meta-item">
+                        <span class="icon">📍</span>
+                        <span>Line 56</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🔖</span>
+                        <span>CWE-89</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🎯</span>
+                        <span>Confidence: 100%</span>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <span class="cvss-score">CVSS: 9.3</span>
+                    </div>
+                    
+                    
+                    <div class="meta-item">
+                        <span class="risk-score">Risk: 9.3</span>
+                    </div>
+                    
+                </div>
+
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 100.0%"></div>
+                </div>
+
+                <p style="margin: 15px 0;"><strong>📝 Description:</strong> Incorporation of user input ('search_term') directly into a SQL query without sanitization, leading to SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <div class="code-block"><pre>query = f"SELECT username, email FROM users WHERE username LIKE '%{search_term}%'"</pre></div>
+                
+
+                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> By manipulating the 'search_term', an attacker can inject SQL code to execute arbitrary SQL commands.</p>
+                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Utilize parameterized queries to handle user inputs securely.</p>
+
+                
+                <details style="margin-top: 15px;">
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
+                        <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
+                        <p><strong>Exploitability:</strong> 3.9</p>
+                        <p><strong>Impact:</strong> 5.5</p>
+                        <p><strong>Attack Vector:</strong> NETWORK</p>
+                        <p><strong>Attack Complexity:</strong> LOW</p>
+                    </div>
+                </details>
+                
+            </div>
+            
+            <div class="vulnerability critical">
+                <div class="vulnerability-header">
+                    <div class="vulnerability-title">4. SQL Injection</div>
+                    <span class="severity-badge severity-critical">
+                        Critical
+                    </span>
+                </div>
+
+                <div class="vulnerability-meta">
+                    <div class="meta-item">
+                        <span class="icon">📍</span>
+                        <span>Line 63</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🔖</span>
+                        <span>CWE-89</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="icon">🎯</span>
+                        <span>Confidence: 100%</span>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <span class="cvss-score">CVSS: 9.3</span>
+                    </div>
+                    
+                    
+                    <div class="meta-item">
+                        <span class="risk-score">Risk: 9.3</span>
+                    </div>
+                    
+                </div>
+
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 100.0%"></div>
+                </div>
+
+                <p style="margin: 15px 0;"><strong>📝 Description:</strong> SQL query in 'update_email' method is constructed by directly including user-controlled input without any form of validation or escaping, leading to SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <div class="code-block"><pre>query = f"UPDATE users SET email = '{new_email}' WHERE id = {user_id}"</pre></div>
+                
+
+                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> An attacker can craft 'new_email' or 'user_id' inputs to modify the SQL command, potentially altering database entries or executing unintended SQL actions.</p>
+                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Employ parameterized queries to mitigate SQL injection risks.</p>
+
+                
+                <details style="margin-top: 15px;">
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
+                        <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
+                        <p><strong>Exploitability:</strong> 3.9</p>
+                        <p><strong>Impact:</strong> 5.5</p>
+                        <p><strong>Attack Vector:</strong> NETWORK</p>
+                        <p><strong>Attack Complexity:</strong> LOW</p>
+                    </div>
+                </details>
+                
+            </div>
+            
+        </div>
+
+        
+
+        
+
+        <div class="footer">
+            <p style="font-size: 1.1em; margin-bottom: 10px;">
+                <strong>Generated by VulnDetective</strong> - AI-Powered Vulnerability Detection System
+            </p>
+            <p style="margin-bottom: 10px;">
+                Featuring: GitHub URL Fetching • CVSS 3.1 Scoring • Interactive AI Assistant • Advanced Visualization
+            </p>
+            <p style="color: #999;">
+                © 2025 VulnDetective Team | Report generated on 2025-10-31 20:56:38
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js 차트 생성
+        const severityData = {"labels": ["Critical", "High", "Medium", "Low"], "values": [4, 0, 0, 0]};
+        const typeData = {"labels": ["SQL Injection"], "values": [4]};
+        const cvssData = {"labels": ["Vuln 1", "Vuln 2", "Vuln 3", "Vuln 4"], "values": [9.3, 9.3, 9.3, 9.3]};
+
+        // Severity Distribution Chart
+        new Chart(document.getElementById('severityChart'), {
+            type: 'doughnut',
+            data: {
+                labels: severityData.labels,
+                datasets: [{
+                    data: severityData.values,
+                    backgroundColor: [
+                        '#dc2626',  // Critical
+                        '#ea580c',  // High
+                        '#facc15',  // Medium
+                        '#3b82f6',  // Low
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { size: 12 } }
+                    }
+                }
+            }
+        });
+
+        // Vulnerability Types Chart
+        new Chart(document.getElementById('typeChart'), {
+            type: 'bar',
+            data: {
+                labels: typeData.labels,
+                datasets: [{
+                    label: 'Count',
+                    data: typeData.values,
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // CVSS Distribution Chart
+        new Chart(document.getElementById('cvssChart'), {
+            type: 'line',
+            data: {
+                labels: cvssData.labels,
+                datasets: [{
+                    label: 'CVSS Score',
+                    data: cvssData.values,
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(102, 126, 234, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
