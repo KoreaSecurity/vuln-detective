@@ -270,14 +270,14 @@ ADVANCED_HTML_TEMPLATE = """
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔍 VulnDetective Report</h1>
+            <h1>VulnDetective Report</h1>
             <div class="subtitle">
                 Advanced AI-Powered Security Analysis
             </div>
             <div style="margin-top: 20px;">
-                <span class="badge">📁 {{ filename }}</span>
-                <span class="badge">📅 {{ timestamp }}</span>
-                <span class="badge">💻 {{ language }}</span>
+                <span class="badge">File: {{ filename }}</span>
+                <span class="badge">Date: {{ timestamp }}</span>
+                <span class="badge">Language: {{ language }}</span>
             </div>
         </div>
 
@@ -310,7 +310,7 @@ ADVANCED_HTML_TEMPLATE = """
 
         <!-- Charts Section -->
         <div class="chart-section">
-            <h2>📊 Visual Analytics</h2>
+            <h2>Visual Analytics</h2>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
                 <div>
@@ -336,7 +336,7 @@ ADVANCED_HTML_TEMPLATE = """
         </div>
 
         <div class="section">
-            <h2>⚠️ Detected Vulnerabilities</h2>
+            <h2>Detected Vulnerabilities</h2>
             {% for vuln in vulnerabilities %}
             <div class="vulnerability {{ vuln.severity.value.lower() }}">
                 <div class="vulnerability-header">
@@ -348,16 +348,16 @@ ADVANCED_HTML_TEMPLATE = """
 
                 <div class="vulnerability-meta">
                     <div class="meta-item">
-                        <span class="icon">📍</span>
-                        <span>Line {{ vuln.line_number }}</span>
+                        <span class="icon">Line:</span>
+                        <span>{{ vuln.line_number }}</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🔖</span>
+                        <span class="icon">CWE:</span>
                         <span>{{ vuln.cwe_id }}</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🎯</span>
-                        <span>Confidence: {{ "%.0f"|format(vuln.confidence * 100) }}%</span>
+                        <span class="icon">Confidence:</span>
+                        <span>{{ "%.0f"|format(vuln.confidence * 100) }}%</span>
                     </div>
                     {% if vuln.metadata and vuln.metadata.cvss %}
                     <div class="meta-item">
@@ -375,19 +375,19 @@ ADVANCED_HTML_TEMPLATE = """
                     <div class="confidence-fill" style="width: {{ vuln.confidence * 100 }}%"></div>
                 </div>
 
-                <p style="margin: 15px 0;"><strong>📝 Description:</strong> {{ vuln.description }}</p>
+                <p style="margin: 15px 0;"><strong>Description:</strong> {{ vuln.description }}</p>
 
                 {% if vuln.code_snippet %}
-                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Vulnerable Code:</strong></p>
                 <div class="code-block"><pre>{{ vuln.code_snippet }}</pre></div>
                 {% endif %}
 
-                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> {{ vuln.exploitability }}</p>
-                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> {{ vuln.recommendation }}</p>
+                <p style="margin-top: 15px;"><strong>Exploitability:</strong> {{ vuln.exploitability }}</p>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> {{ vuln.recommendation }}</p>
 
                 {% if vuln.metadata and vuln.metadata.cvss %}
                 <details style="margin-top: 15px;">
-                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">CVSS Details</summary>
                     <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
                         <p><strong>Vector String:</strong> {{ vuln.metadata.cvss.vector_string }}</p>
                         <p><strong>Exploitability:</strong> {{ vuln.metadata.cvss.exploitability }}</p>
@@ -403,31 +403,31 @@ ADVANCED_HTML_TEMPLATE = """
 
         {% if exploits %}
         <div class="section">
-            <h2>💣 Generated Exploits</h2>
+            <h2>Generated Exploits</h2>
             {% for exploit in exploits %}
             <div class="exploit">
                 <h3>Exploit for {{ exploit.vulnerability.vuln_type }}</h3>
 
                 <div class="timeline">
                     <div class="timeline-item">
-                        <strong>📋 Strategy:</strong>
+                        <strong>Strategy:</strong>
                         <p>{{ exploit.strategy }}</p>
                     </div>
                     <div class="timeline-item">
-                        <strong>📦 Requirements:</strong>
+                        <strong>Requirements:</strong>
                         <p>{{ exploit.requirements }}</p>
                     </div>
                     <div class="timeline-item">
-                        <strong>🎯 Expected Outcome:</strong>
+                        <strong>Expected Outcome:</strong>
                         <p>{{ exploit.expected_outcome }}</p>
                     </div>
                 </div>
 
-                <p style="margin-top: 15px;"><strong>💻 Exploit Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Exploit Code:</strong></p>
                 <div class="code-block"><pre>{{ exploit.code }}</pre></div>
 
                 {% if exploit.notes %}
-                <p style="margin-top: 15px;"><strong>📌 Notes:</strong> {{ exploit.notes }}</p>
+                <p style="margin-top: 15px;"><strong>Notes:</strong> {{ exploit.notes }}</p>
                 {% endif %}
             </div>
             {% endfor %}
@@ -436,28 +436,28 @@ ADVANCED_HTML_TEMPLATE = """
 
         {% if patches %}
         <div class="section">
-            <h2>🔧 Generated Patches</h2>
+            <h2>Generated Patches</h2>
             {% for patch in patches %}
             <div class="patch">
                 <h3>Patch for {{ patch.vulnerability.vuln_type }}</h3>
 
-                <p><strong>🎯 Strategy:</strong> {{ patch.strategy }}</p>
+                <p><strong>Strategy:</strong> {{ patch.strategy }}</p>
 
-                <p style="margin-top: 15px;"><strong>❌ Original Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Original Code:</strong></p>
                 <div class="code-block"><pre>{{ patch.original_code }}</pre></div>
 
-                <p style="margin-top: 15px;"><strong>✅ Patched Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Patched Code:</strong></p>
                 <div class="code-block"><pre>{{ patch.patched_code }}</pre></div>
 
-                <p style="margin-top: 15px;"><strong>📖 Explanation:</strong> {{ patch.explanation }}</p>
+                <p style="margin-top: 15px;"><strong>Explanation:</strong> {{ patch.explanation }}</p>
 
                 {% if patch.test_cases %}
-                <p style="margin-top: 15px;"><strong>🧪 Test Cases:</strong></p>
+                <p style="margin-top: 15px;"><strong>Test Cases:</strong></p>
                 <div class="code-block"><pre>{{ patch.test_cases }}</pre></div>
                 {% endif %}
 
                 {% if patch.additional_measures %}
-                <p style="margin-top: 15px;"><strong>🛡️ Additional Security Measures:</strong> {{ patch.additional_measures }}</p>
+                <p style="margin-top: 15px;"><strong>Additional Security Measures:</strong> {{ patch.additional_measures }}</p>
                 {% endif %}
             </div>
             {% endfor %}

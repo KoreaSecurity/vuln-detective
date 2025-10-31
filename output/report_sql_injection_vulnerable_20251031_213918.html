@@ -12,7 +12,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             padding: 20px;
         }
         .container {
@@ -24,7 +24,7 @@
             overflow: hidden;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             color: white;
             padding: 40px;
             text-align: center;
@@ -68,9 +68,7 @@
         .stat-card .number {
             font-size: 3em;
             font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #667eea;
             margin-bottom: 10px;
         }
         .stat-card .label {
@@ -103,7 +101,7 @@
             border-left: 5px solid #667eea;
             padding: 20px;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #f9f9f9 0%, #ffffff 100%);
+            background: #f9f9f9;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: all 0.3s;
@@ -137,10 +135,10 @@
             letter-spacing: 1px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        .severity-critical { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); }
-        .severity-high { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); }
-        .severity-medium { background: linear-gradient(135deg, #facc15 0%, #eab308 100%); color: #333; }
-        .severity-low { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        .severity-critical { background: #dc2626; }
+        .severity-high { background: #ea580c; }
+        .severity-medium { background: #facc15; color: #333; }
+        .severity-low { background: #3b82f6; }
         .vulnerability-meta {
             display: flex;
             gap: 20px;
@@ -160,7 +158,7 @@
         .cvss-score {
             display: inline-block;
             padding: 5px 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             color: white;
             border-radius: 15px;
             font-weight: bold;
@@ -169,7 +167,7 @@
         .risk-score {
             display: inline-block;
             padding: 5px 12px;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            background: #dc2626;
             color: white;
             border-radius: 15px;
             font-weight: bold;
@@ -224,7 +222,7 @@
         }
         .confidence-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             transition: width 0.5s ease;
             border-radius: 4px;
         }
@@ -240,7 +238,7 @@
             top: 0;
             bottom: 0;
             width: 3px;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
         }
         .timeline-item {
             margin-bottom: 20px;
@@ -258,14 +256,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔍 VulnDetective Report</h1>
+            <h1>VulnDetective Report</h1>
             <div class="subtitle">
                 Advanced AI-Powered Security Analysis
             </div>
             <div style="margin-top: 20px;">
-                <span class="badge">📁 examples/sql_injection_vulnerable.py</span>
-                <span class="badge">📅 2025-10-31 20:56:38</span>
-                <span class="badge">💻 python</span>
+                <span class="badge">File: examples/sql_injection_vulnerable.py</span>
+                <span class="badge">Date: 2025-10-31 21:39:18</span>
+                <span class="badge">Language: python</span>
             </div>
         </div>
 
@@ -291,14 +289,14 @@
                 <div class="label">Exploits Generated</div>
             </div>
             <div class="stat-card">
-                <div class="number">0</div>
+                <div class="number">4</div>
                 <div class="label">Patches Available</div>
             </div>
         </div>
 
         <!-- Charts Section -->
         <div class="chart-section">
-            <h2>📊 Visual Analytics</h2>
+            <h2>Visual Analytics</h2>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
                 <div>
@@ -324,7 +322,7 @@
         </div>
 
         <div class="section">
-            <h2>⚠️ Detected Vulnerabilities</h2>
+            <h2>Detected Vulnerabilities</h2>
             
             <div class="vulnerability critical">
                 <div class="vulnerability-header">
@@ -336,16 +334,16 @@
 
                 <div class="vulnerability-meta">
                     <div class="meta-item">
-                        <span class="icon">📍</span>
-                        <span>Line 42</span>
+                        <span class="icon">Line:</span>
+                        <span>42</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🔖</span>
+                        <span class="icon">CWE:</span>
                         <span>CWE-89</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🎯</span>
-                        <span>Confidence: 100%</span>
+                        <span class="icon">Confidence:</span>
+                        <span>100%</span>
                     </div>
                     
                     <div class="meta-item">
@@ -363,19 +361,19 @@
                     <div class="confidence-fill" style="width: 100.0%"></div>
                 </div>
 
-                <p style="margin: 15px 0;"><strong>📝 Description:</strong> Direct concatenation of user input into SQL query without sanitization or parameterization, allowing SQL injection.</p>
+                <p style="margin: 15px 0;"><strong>Description:</strong> Direct concatenation of user input into SQL query without sanitization or parameterization, allowing SQL injection.</p>
 
                 
-                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Vulnerable Code:</strong></p>
                 <div class="code-block"><pre>query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"</pre></div>
                 
 
-                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> An attacker can manipulate the 'username' or 'password' input to alter the SQL query, potentially bypassing authentication or extracting sensitive data.</p>
-                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Use parameterized queries or prepared statements to safely handle user input.</p>
+                <p style="margin-top: 15px;"><strong>Exploitability:</strong> An attacker can manipulate the input to execute arbitrary SQL commands.</p>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Use parameterized queries or prepared statements to safely handle user input.</p>
 
                 
                 <details style="margin-top: 15px;">
-                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">CVSS Details</summary>
                     <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
                         <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
                         <p><strong>Exploitability:</strong> 3.9</p>
@@ -397,16 +395,16 @@
 
                 <div class="vulnerability-meta">
                     <div class="meta-item">
-                        <span class="icon">📍</span>
-                        <span>Line 49</span>
+                        <span class="icon">Line:</span>
+                        <span>48</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🔖</span>
+                        <span class="icon">CWE:</span>
                         <span>CWE-89</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🎯</span>
-                        <span>Confidence: 100%</span>
+                        <span class="icon">Confidence:</span>
+                        <span>100%</span>
                     </div>
                     
                     <div class="meta-item">
@@ -424,19 +422,19 @@
                     <div class="confidence-fill" style="width: 100.0%"></div>
                 </div>
 
-                <p style="margin: 15px 0;"><strong>📝 Description:</strong> User input for 'user_id' is directly concatenated into the SQL query, leading to SQL injection vulnerability.</p>
+                <p style="margin: 15px 0;"><strong>Description:</strong> Concatenating the 'user_id' directly into the SQL query without validation or parameterization, leading to SQL injection.</p>
 
                 
-                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Vulnerable Code:</strong></p>
                 <div class="code-block"><pre>query = "SELECT * FROM users WHERE id = " + str(user_id)</pre></div>
                 
 
-                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> An attacker can input a malicious 'user_id' value to manipulate the SQL query, potentially accessing or modifying unauthorized data.</p>
-                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Adopt parameterized queries to prevent SQL injection.</p>
+                <p style="margin-top: 15px;"><strong>Exploitability:</strong> An attacker can append additional SQL commands to 'user_id' parameter to manipulate the SQL query.</p>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Use parameterized queries to prevent SQL injection.</p>
 
                 
                 <details style="margin-top: 15px;">
-                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">CVSS Details</summary>
                     <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
                         <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
                         <p><strong>Exploitability:</strong> 3.9</p>
@@ -458,16 +456,16 @@
 
                 <div class="vulnerability-meta">
                     <div class="meta-item">
-                        <span class="icon">📍</span>
-                        <span>Line 56</span>
+                        <span class="icon">Line:</span>
+                        <span>53</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🔖</span>
+                        <span class="icon">CWE:</span>
                         <span>CWE-89</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🎯</span>
-                        <span>Confidence: 100%</span>
+                        <span class="icon">Confidence:</span>
+                        <span>100%</span>
                     </div>
                     
                     <div class="meta-item">
@@ -485,19 +483,19 @@
                     <div class="confidence-fill" style="width: 100.0%"></div>
                 </div>
 
-                <p style="margin: 15px 0;"><strong>📝 Description:</strong> Incorporation of user input ('search_term') directly into a SQL query without sanitization, leading to SQL injection.</p>
+                <p style="margin: 15px 0;"><strong>Description:</strong> Incorporating user input ('search_term') directly into a SQL query without sanitization, leading to SQL injection.</p>
 
                 
-                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Vulnerable Code:</strong></p>
                 <div class="code-block"><pre>query = f"SELECT username, email FROM users WHERE username LIKE '%{search_term}%'"</pre></div>
                 
 
-                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> By manipulating the 'search_term', an attacker can inject SQL code to execute arbitrary SQL commands.</p>
-                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Utilize parameterized queries to handle user inputs securely.</p>
+                <p style="margin-top: 15px;"><strong>Exploitability:</strong> An attacker can use the 'search_term' to inject malicious SQL code.</p>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Utilize parameterized queries to handle user inputs securely.</p>
 
                 
                 <details style="margin-top: 15px;">
-                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">CVSS Details</summary>
                     <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
                         <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
                         <p><strong>Exploitability:</strong> 3.9</p>
@@ -519,16 +517,16 @@
 
                 <div class="vulnerability-meta">
                     <div class="meta-item">
-                        <span class="icon">📍</span>
-                        <span>Line 63</span>
+                        <span class="icon">Line:</span>
+                        <span>58</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🔖</span>
+                        <span class="icon">CWE:</span>
                         <span>CWE-89</span>
                     </div>
                     <div class="meta-item">
-                        <span class="icon">🎯</span>
-                        <span>Confidence: 100%</span>
+                        <span class="icon">Confidence:</span>
+                        <span>100%</span>
                     </div>
                     
                     <div class="meta-item">
@@ -546,19 +544,19 @@
                     <div class="confidence-fill" style="width: 100.0%"></div>
                 </div>
 
-                <p style="margin: 15px 0;"><strong>📝 Description:</strong> SQL query in 'update_email' method is constructed by directly including user-controlled input without any form of validation or escaping, leading to SQL injection.</p>
+                <p style="margin: 15px 0;"><strong>Description:</strong> User input ('new_email') is directly used in an SQL update statement without sanitization, allowing for SQL injection.</p>
 
                 
-                <p style="margin-top: 15px;"><strong>💻 Vulnerable Code:</strong></p>
+                <p style="margin-top: 15px;"><strong>Vulnerable Code:</strong></p>
                 <div class="code-block"><pre>query = f"UPDATE users SET email = '{new_email}' WHERE id = {user_id}"</pre></div>
                 
 
-                <p style="margin-top: 15px;"><strong>💣 Exploitability:</strong> An attacker can craft 'new_email' or 'user_id' inputs to modify the SQL command, potentially altering database entries or executing unintended SQL actions.</p>
-                <p style="margin-top: 10px;"><strong>✅ Recommendation:</strong> Employ parameterized queries to mitigate SQL injection risks.</p>
+                <p style="margin-top: 15px;"><strong>Exploitability:</strong> An attacker can craft 'new_email' input to alter the SQL command.</p>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Adopt parameterized queries for updating database records.</p>
 
                 
                 <details style="margin-top: 15px;">
-                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">🔬 CVSS Details</summary>
+                    <summary style="cursor: pointer; color: #667eea; font-weight: bold;">CVSS Details</summary>
                     <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
                         <p><strong>Vector String:</strong> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L</p>
                         <p><strong>Exploitability:</strong> 3.9</p>
@@ -575,6 +573,306 @@
         
 
         
+        <div class="section">
+            <h2>Generated Patches</h2>
+            
+            <div class="patch">
+                <h3>Patch for SQL Injection</h3>
+
+                <p><strong>Strategy:</strong> The strategy to fix this vulnerability is to replace the direct concatenation of user input into SQL queries with parameterized queries. This will prevent SQL injection as the user input will not be directly executed as part of the SQL command.</p>
+
+                <p style="margin-top: 15px;"><strong>Original Code:</strong></p>
+                <div class="code-block"><pre>query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        return result is not None
+
+    def get_user_by_id(self, user_id):
+        """
+        VULNERABLE: SQL Injection via user_id parameter
+        """
+        query = "SELECT * FROM users WHERE id = " + str(user_id)
+        self.cursor.execute(query)
+        return self.cursor.fetchone()
+
+    def search_users(self, search_term):
+        """
+        VULNERABLE: SQL Injection in LIKE clause
+        """
+        query = f"SELECT username, email FROM users WHERE username LIKE '%{search_term}%'"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Patched Code:</strong></p>
+                <div class="code-block"><pre>query = "SELECT * FROM users WHERE username = %s AND password = %s"
+        self.cursor.execute(query, (username, password))
+        result = self.cursor.fetchone()
+        return result is not None
+
+    def get_user_by_id(self, user_id):
+        """
+        FIXED: SQL Injection via user_id parameter
+        """
+        query = "SELECT * FROM users WHERE id = %s"
+        self.cursor.execute(query, (user_id,))
+        return self.cursor.fetchone()
+
+    def search_users(self, search_term):
+        """
+        FIXED: SQL Injection in LIKE clause
+        """
+        query = "SELECT username, email FROM users WHERE username LIKE %s"
+        self.cursor.execute(query, ('%' + search_term + '%',))
+        return self.cursor.fetchall()</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Explanation:</strong> The fix works by using parameterized queries. Instead of directly concatenating user input into the SQL query, placeholders (%s) are used. The user input is then passed as a second argument to the execute() function. This ensures that the user input is properly escaped, preventing SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>Test Cases:</strong></p>
+                <div class="code-block"><pre># Test case 1: Normal usage
+# Input: username = 'testuser', password = 'testpass'
+# Expected output: True if user exists, False otherwise
+
+# Test case 2: SQL Injection attempt
+# Input: username = 'testuser', password = "' OR '1'='1"
+# Expected output: False (SQL injection attempt should not succeed)
+
+# Test case 3: Normal usage
+# Input: user_id = 1
+# Expected output: User data if user exists, None otherwise
+
+# Test case 4: SQL Injection attempt
+# Input: user_id = "1 OR '1'='1"
+# Expected output: None (SQL injection attempt should not succeed)
+
+# Test case 5: Normal usage
+# Input: search_term = 'test'
+# Expected output: List of users with 'test' in their username
+
+# Test case 6: SQL Injection attempt
+# Input: search_term = "' OR '1'='1"
+# Expected output: Empty list (SQL injection attempt should not succeed)</pre></div>
+                
+
+                
+                <p style="margin-top: 15px;"><strong>Additional Security Measures:</strong> - Use a web application firewall (WAF) to detect and block SQL injection attempts.
+- Limit the privileges of the database account used by the application to only what is necessary.
+- Regularly update and patch your database management system to fix any known vulnerabilities.
+- Implement input validation to reject suspicious or malformed input.
+- Encrypt sensitive data in the database.</p>
+                
+            </div>
+            
+            <div class="patch">
+                <h3>Patch for SQL Injection</h3>
+
+                <p><strong>Strategy:</strong> The main strategy is to replace the string concatenation method with parameterized queries. This will prevent SQL injection by ensuring that user inputs are always treated as literal values, not part of the SQL command.</p>
+
+                <p style="margin-top: 15px;"><strong>Original Code:</strong></p>
+                <div class="code-block"><pre>"""
+VULNERABLE: SQL Injection via user_id parameter
+"""
+query = "SELECT * FROM users WHERE id = " + str(user_id)
+self.cursor.execute(query)
+return self.cursor.fetchone()
+
+def search_users(self, search_term):
+    """
+    VULNERABLE: SQL Injection in LIKE clause
+    """
+    query = f"SELECT username, email FROM users WHERE username LIKE '%{search_term}%'"
+    self.cursor.execute(query)
+    return self.cursor.fetchall()
+
+def update_email(self, user_id, new_email):
+    """
+    VULNERABLE: SQL Injection in UPDATE statement
+    """
+    query = f"UPDATE users SET email = '{new_email}' WHERE id = {user_id}"</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Patched Code:</strong></p>
+                <div class="code-block"><pre>"""
+FIXED: SQL Injection via user_id parameter
+"""
+query = "SELECT * FROM users WHERE id = %s"
+self.cursor.execute(query, (user_id,))
+return self.cursor.fetchone()
+
+def search_users(self, search_term):
+    """
+    FIXED: SQL Injection in LIKE clause
+    """
+    query = "SELECT username, email FROM users WHERE username LIKE %s"
+    self.cursor.execute(query, ('%' + search_term + '%',))
+    return self.cursor.fetchall()
+
+def update_email(self, user_id, new_email):
+    """
+    FIXED: SQL Injection in UPDATE statement
+    """
+    query = "UPDATE users SET email = %s WHERE id = %s"
+    self.cursor.execute(query, (new_email, user_id))</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Explanation:</strong> The fix works by using parameterized queries, which separates the SQL logic from the data being used. This ensures that user inputs are always treated as literal values, not part of the SQL command, preventing SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>Test Cases:</strong></p>
+                <div class="code-block"><pre># Test Case 1: Normal user_id
+user_id = 1
+assert get_user(user_id) is not None
+
+# Test Case 2: SQL Injection attempt in user_id
+user_id = "1 OR 1=1"
+assert get_user(user_id) is None
+
+# Test Case 3: Normal search term
+search_term = "John"
+assert len(search_users(search_term)) > 0
+
+# Test Case 4: SQL Injection attempt in search term
+search_term = "' OR '1'='1"
+assert len(search_users(search_term)) == 0
+
+# Test Case 5: Normal update email
+user_id = 1
+new_email = "new_email@example.com"
+update_email(user_id, new_email)
+assert get_user(user_id)['email'] == new_email
+
+# Test Case 6: SQL Injection attempt in update email
+user_id = 1
+new_email = "' OR '1'='1"
+update_email(user_id, new_email)
+assert get_user(user_id)['email'] != "' OR '1'='1"</pre></div>
+                
+
+                
+                <p style="margin-top: 15px;"><strong>Additional Security Measures:</strong> - Implement input validation to reject suspicious or malformed inputs.
+- Use a web application firewall (WAF) to detect and block SQL injection attempts.
+- Regularly update and patch your database management system to fix any known vulnerabilities.
+- Limit the privileges of database accounts used by the application. They should only have the minimum necessary permissions.
+- Use a secure coding checklist to ensure that all code is reviewed for security before it is deployed.</p>
+                
+            </div>
+            
+            <div class="patch">
+                <h3>Patch for SQL Injection</h3>
+
+                <p><strong>Strategy:</strong> The strategy to fix this vulnerability is to use parameterized queries. Parameterized queries ensure that the parameters (user inputs) are treated as literal values and not part of the SQL command. This prevents an attacker from injecting malicious SQL code.</p>
+
+                <p style="margin-top: 15px;"><strong>Original Code:</strong></p>
+                <div class="code-block"><pre>def search_users(self, search_term):
+        """
+        VULNERABLE: SQL Injection in LIKE clause
+        """
+        query = f"SELECT username, email FROM users WHERE username LIKE '%{search_term}%'"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
+    def update_email(self, user_id, new_email):
+        """
+        VULNERABLE: SQL Injection in UPDATE statement
+        """
+        query = f"UPDATE users SET email = '{new_email}' WHERE id = {user_id}"
+        self.cursor.execute(query)
+        self.conn.commit()</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Patched Code:</strong></p>
+                <div class="code-block"><pre>def search_users(self, search_term):
+        """
+        SECURE: Parameterized SQL query in LIKE clause
+        """
+        query = "SELECT username, email FROM users WHERE username LIKE %s"
+        self.cursor.execute(query, ('%' + search_term + '%',))
+        return self.cursor.fetchall()
+
+    def update_email(self, user_id, new_email):
+        """
+        SECURE: Parameterized SQL query in UPDATE statement
+        """
+        query = "UPDATE users SET email = %s WHERE id = %s"
+        self.cursor.execute(query, (new_email, user_id))
+        self.conn.commit()</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Explanation:</strong> The fix works by using parameterized queries. Instead of directly injecting user input into the SQL query, the input is passed as a parameter to the `execute` method. This ensures that the input is treated as a literal value and not part of the SQL command, preventing SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>Test Cases:</strong></p>
+                <div class="code-block"><pre># Test case 1: Normal usage
+search_term = "test"
+assert len(search_users(search_term)) >= 0
+
+# Test case 2: SQL Injection attempt
+search_term = "test'; DROP TABLE users; --"
+assert len(search_users(search_term)) >= 0
+
+# Test case 3: Normal usage
+user_id = 1
+new_email = "test@example.com"
+assert update_email(user_id, new_email) is None
+
+# Test case 4: SQL Injection attempt
+user_id = 1
+new_email = "test'; DROP TABLE users; --"
+assert update_email(user_id, new_email) is None</pre></div>
+                
+
+                
+                <p style="margin-top: 15px;"><strong>Additional Security Measures:</strong> - Use a web application firewall (WAF) to detect and block SQL injection attempts.
+- Limit the privileges of the database account used by the application. It should only have the necessary permissions and no more.
+- Regularly update and patch your database management system to fix any known vulnerabilities.
+- Use a static code analyzer to detect potential SQL injection vulnerabilities in your code.
+- Educate developers about the dangers of SQL injection and how to prevent it.</p>
+                
+            </div>
+            
+            <div class="patch">
+                <h3>Patch for SQL Injection</h3>
+
+                <p><strong>Strategy:</strong> The strategy to fix this vulnerability is to use parameterized queries instead of string formatting. Parameterized queries ensure that user input is always treated as literal input, not part of the SQL command. This effectively prevents SQL injection attacks.</p>
+
+                <p style="margin-top: 15px;"><strong>Original Code:</strong></p>
+                <div class="code-block"><pre>def update_email(self, user_id, new_email):
+    """
+    VULNERABLE: SQL Injection in UPDATE statement
+    """
+    query = f"UPDATE users SET email = '{new_email}' WHERE id = {user_id}"
+    self.cursor.execute(query)
+    self.conn.commit()</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Patched Code:</strong></p>
+                <div class="code-block"><pre>def update_email(self, user_id, new_email):
+    """
+    Secure: Uses parameterized query to prevent SQL Injection
+    """
+    query = "UPDATE users SET email = ? WHERE id = ?"
+    self.cursor.execute(query, (new_email, user_id))
+    self.conn.commit()</pre></div>
+
+                <p style="margin-top: 15px;"><strong>Explanation:</strong> The fix works by using a parameterized query instead of string formatting. In the parameterized query, the "?" placeholders are replaced by the tuple of parameters provided in the `execute` method. This ensures that the `new_email` and `user_id` inputs are treated as literal strings, not part of the SQL command, effectively preventing SQL injection.</p>
+
+                
+                <p style="margin-top: 15px;"><strong>Test Cases:</strong></p>
+                <div class="code-block"><pre># Test 1: Normal update
+db.update_email(1, 'new_email@example.com')
+assert db.get_email(1) == 'new_email@example.com'
+
+# Test 2: Attempted SQL injection
+db.update_email(1, "new_email'; DROP TABLE users; --")
+assert db.get_email(1) == "new_email'; DROP TABLE users; --"</pre></div>
+                
+
+                
+                <p style="margin-top: 15px;"><strong>Additional Security Measures:</strong> 1. **Input Validation**: Validate user input before using it in SQL queries. For example, check if the email is in the correct format.
+2. **Least Privilege Principle**: The database user used by the application should have only the necessary permissions. For example, if the application only needs to read from a table, the user should not have write permissions.
+3. **Error Handling**: Do not reveal database errors to the user. This can give an attacker information about the database structure.
+4. **Regular Updates**: Regularly update your database management system to benefit from the latest security patches.
+5. **Web Application Firewall (WAF)**: A WAF can help to detect and block SQL injection attacks.</p>
+                
+            </div>
+            
+        </div>
+        
 
         <div class="footer">
             <p style="font-size: 1.1em; margin-bottom: 10px;">
@@ -584,7 +882,7 @@
                 Featuring: GitHub URL Fetching • CVSS 3.1 Scoring • Interactive AI Assistant • Advanced Visualization
             </p>
             <p style="color: #999;">
-                © 2025 VulnDetective Team | Report generated on 2025-10-31 20:56:38
+                © 2025 VulnDetective Team | Report generated on 2025-10-31 21:39:18
             </p>
         </div>
     </div>

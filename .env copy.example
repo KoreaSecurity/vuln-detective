@@ -1,0 +1,21 @@
+# AI Model API Keys
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Model Configuration
+DEFAULT_MODEL=gpt-4-turbo-preview
+FAST_MODEL=gpt-3.5-turbo
+ADVANCED_MODEL=gpt-5o
+
+# Analysis Settings
+MAX_FILE_SIZE=1048576
+TIMEOUT_SECONDS=300
+CONFIDENCE_THRESHOLD=0.7
+
+# Output Settings
+OUTPUT_DIR=./output
+REPORT_FORMAT=html,json,sarif
+
+# Debug
+DEBUG=false
+LOG_LEVEL=INFO
